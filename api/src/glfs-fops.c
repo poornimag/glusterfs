@@ -951,7 +951,7 @@ pub_glfs_pwritev (struct glfs_fd *glfd, const struct iovec *iovec, int iovcnt,
 
 	size = iov_length (iovec, iovcnt);
 
-	iobuf = iobuf_get2 (subvol->ctx->iobuf_pool, size);
+	iobuf = iobuf_get2 (process_ctx.rp.iobuf_pool, size);
 	if (!iobuf) {
 		ret = -1;
 		errno = ENOMEM;
@@ -1090,7 +1090,7 @@ pub_glfs_pwritev_async (struct glfs_fd *glfd, const struct iovec *iovec,
 	gio->fn     = fn;
 	gio->data   = data;
 
-	ret = synctask_new (pub_glfs_from_glfd (glfd)->ctx->env,
+	ret = synctask_new (process_ctx.rp.env,
 			    glfs_io_async_task, glfs_io_async_cbk,
 			    NULL, gio);
 
@@ -1219,7 +1219,7 @@ glfs_fsync_async_common (struct glfs_fd *glfd, glfs_io_cbk fn, void *data,
 	gio->fn     = fn;
 	gio->data   = data;
 
-	ret = synctask_new (pub_glfs_from_glfd (glfd)->ctx->env,
+	ret = synctask_new (process_ctx.rp.env,
 			    glfs_io_async_task, glfs_io_async_cbk,
 			    NULL, gio);
 
@@ -1375,7 +1375,7 @@ pub_glfs_ftruncate_async (struct glfs_fd *glfd, off_t offset, glfs_io_cbk fn,
 	gio->fn     = fn;
 	gio->data   = data;
 
-	ret = synctask_new (pub_glfs_from_glfd (glfd)->ctx->env,
+	ret = synctask_new (process_ctx.rp.env,
 			    glfs_io_async_task, glfs_io_async_cbk,
 			    NULL, gio);
 
@@ -2188,7 +2188,7 @@ pub_glfs_discard_async (struct glfs_fd *glfd, off_t offset, size_t len,
 	gio->fn     = fn;
 	gio->data   = data;
 
-	ret = synctask_new (pub_glfs_from_glfd (glfd)->ctx->env,
+	ret = synctask_new (process_ctx.rp.env,
 			    glfs_io_async_task, glfs_io_async_cbk,
 			    NULL, gio);
 
@@ -2230,7 +2230,7 @@ pub_glfs_zerofill_async (struct glfs_fd *glfd, off_t offset, off_t len,
         gio->fn     = fn;
         gio->data   = data;
 
-        ret = synctask_new (pub_glfs_from_glfd (glfd)->ctx->env,
+        ret = synctask_new (process_ctx.rp.env,
                             glfs_io_async_task, glfs_io_async_cbk,
                             NULL, gio);
 
@@ -3798,10 +3798,10 @@ GFAPI_SYMVER_PUBLIC_DEFAULT(glfs_dup, 3.4.0);
 void
 priv_glfs_process_upcall_event (struct glfs *fs, void *data)
 {
-        int                ret             = -1;
-        upcall_entry       *u_list         = NULL;
-        glusterfs_ctx_t    *ctx            = NULL;
-        struct gf_upcall   *upcall_data    = NULL;
+        int                     ret             = -1;
+        upcall_entry           *u_list         = NULL;
+        glusterfs_vol_ctx_t    *ctx            = NULL;
+        struct gf_upcall       *upcall_data    = NULL;
 
         gf_log (THIS->name, GF_LOG_DEBUG,
                 "Upcall gfapi callback is called");
@@ -3927,7 +3927,7 @@ glfs_anonymous_pwritev (struct glfs *fs, struct glfs_object *object,
 
         size = iov_length (iovec, iovcnt);
 
-        iobuf = iobuf_get2 (subvol->ctx->iobuf_pool, size);
+        iobuf = iobuf_get2 (process_ctx.rp.iobuf_pool, size);
         if (!iobuf) {
                 ret = -1;
                 errno = ENOMEM;
