@@ -1809,7 +1809,7 @@ ec_rebuild_data (call_frame_t *frame, ec_t *ec, fd_t *fd, uint64_t size,
         heal->xl = ec->xl;
         heal->data = &barrier;
         syncbarrier_init (heal->data);
-        pool = ec->xl->ctx->iobuf_pool;
+        pool = process_ctx.rp.iobuf_pool;
         heal->total_size = size;
         heal->size = iobpool_default_pagesize (pool);
         heal->bad       = ec_char_array_to_mask (healed_sinks, ec->nodes);
@@ -2360,7 +2360,7 @@ ec_launch_heal (ec_t *ec, ec_fop_data_t *fop)
 {
         int     ret = 0;
 
-        ret = synctask_new (ec->xl->ctx->env, ec_synctask_heal_wrap,
+        ret = synctask_new (process_ctx.rp.env, ec_synctask_heal_wrap,
                             ec_heal_done, NULL, fop);
         if (ret < 0) {
                 ec_fop_set_error(fop, ENOMEM);

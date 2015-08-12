@@ -1287,7 +1287,7 @@ afr_handle_split_brain_commands (xlator_t *this, call_frame_t *frame,
                 data->spb_child_index = spb_child_index;
                 data->frame = frame;
                 data->loc = loc;
-                ret = synctask_new (this->ctx->env,
+                ret = synctask_new (process_ctx.rp.env,
                                     afr_can_set_split_brain_choice,
                                     afr_set_split_brain_choice, NULL, data);
                 if (ret) {

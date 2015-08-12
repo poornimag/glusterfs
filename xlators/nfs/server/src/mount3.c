@@ -2711,7 +2711,7 @@ glfs_resolve_at (struct glfs *, xlator_t *, inode_t *,
                  const char *, loc_t *, struct iatt *, int, int);
 
 extern struct glfs *
-glfs_new_from_ctx (glusterfs_ctx_t *);
+glfs_new_from_ctx (glusterfs_vol_ctx_t *);
 
 extern void
 glfs_free_from_ctx (struct glfs *);
@@ -3503,7 +3503,7 @@ mnt3_init_state (xlator_t *nfsx)
                 return NULL;
         }
 
-        ms->iobpool = nfsx->ctx->iobuf_pool;
+        ms->iobpool = process_ctx.rp.iobuf_pool;
         ms->nfsx = nfsx;
         INIT_LIST_HEAD (&ms->exportlist);
         ret = mnt3_init_options (ms, nfsx->options);

@@ -852,7 +852,7 @@ out:
                                 copy_local->stbuf = local->stbuf;
                                 copy->local = copy_local;
                                 FRAME_SU_DO (copy, dht_local_t);
-                                ret = synctask_new (this->ctx->env,
+                                ret = synctask_new (process_ctx.rp.env,
                                                     dht_dir_attr_heal,
                                                     dht_dir_attr_heal_done,
                                                     copy, copy);

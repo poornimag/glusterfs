@@ -2800,7 +2800,7 @@ mq_synctask (xlator_t *this, synctask_fn_t task, gf_boolean_t spawn, loc_t *loc,
         args->contri = contri;
 
         if (spawn) {
-                ret = synctask_new1 (this->ctx->env, 1024 * 16, task,
+                ret = synctask_new1 (process_ctx.rp.env, 1024 * 16, task,
                                       mq_synctask_cleanup, NULL, args);
                 if (ret) {
                         gf_log (this->name, GF_LOG_ERROR, "Failed to spawn "
