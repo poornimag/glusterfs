@@ -104,6 +104,8 @@
                         "was provided"
 #define glusterfsd_msg_34 (GLFS_COMP_BASE + 34), "memory accounting init" \
                         " failed."
+#define glusterfsd_msg_35 (GLFS_COMP_BASE + 35), "ERROR: glusterfs process context" \
+                        " not initialized"
 /*------------*/
 #define glfs_msg_end_x GLFS_MSGID_END, "Invalid: End of messages"
 
